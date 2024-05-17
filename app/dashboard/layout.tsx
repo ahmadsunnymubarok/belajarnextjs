@@ -14,6 +14,9 @@ import {
   MenuItem,
   MenuItems,
   Transition,
+  Popover,
+  PopoverButton,
+  PopoverPanel,
 } from '@headlessui/react';
 import {
   ArchiveBoxXMarkIcon,
@@ -37,13 +40,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 }
 
 function Topnav() {
-  const [hidden, setHidden] = useState('hidden');
-
-  function handleActive() {
-    if (true) {
-      setHidden('block');
-    }
-  }
   // function handleHide() {
   //   if (false) {
   //     setHidden('hidden');
@@ -66,7 +62,7 @@ function Topnav() {
       <div className="flex  justify-end ">
         <ul className="display flex grid w-44 grid-cols-2 content-center">
           <li>
-            <BellIcon className="mt-[0.4rem] w-7 text-white" />
+            <Notification />
           </li>
           <li>
             <Example />
@@ -79,64 +75,117 @@ function Topnav() {
 
 function Example() {
   return (
-    <div className="w-25 text-right">
-      <Menu>
-        <MenuButton className="inline-flex items-center gap-2  px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10   data-[focus]:outline-1 data-[focus]:outline-white">
-          <Image src={profile} alt="profile" className="h-9 w-9" />
-          <ChevronDownIcon className="w-8 fill-white/60" />
-        </MenuButton>
-        <Transition
-          enter="transition ease-out duration-75"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="transition ease-in duration-100"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
+    <Popover className={`mt-[0.3rem]`}>
+      <PopoverButton className="grid grid-cols-2 content-center text-sm/6 font-semibold text-white/50 focus:outline-none data-[active]:text-white data-[hover]:text-white data-[focus]:outline-1 data-[focus]:outline-white">
+        <Image src={profile} alt="profile" className="h-9 w-9" />
+        <ChevronDownIcon className="w-8 fill-white/60" />
+      </PopoverButton>
+      <Transition
+        enter="transition ease-out duration-200"
+        enterFrom="opacity-0 translate-y-1"
+        enterTo="opacity-100 translate-y-0"
+        leave="transition ease-in duration-150"
+        leaveFrom="opacity-100 translate-y-0"
+        leaveTo="opacity-0 translate-y-1"
+      >
+        <PopoverPanel
+          anchor="bottom end"
+          className="mt-[6px] divide-y divide-white/5 rounded-xl bg-black text-sm/6 [--anchor-gap:var(--spacing-5)]"
         >
-          <MenuItems
-            anchor="bottom end"
-            className="h-52 w-52 origin-top-right rounded-l-xl border border-white/5 bg-white p-1 text-sm/6  text-black [--anchor-gap:var(--spacing-1)] focus:outline-none"
-          >
-            <MenuItem>
-              <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-[focus]:bg-white/10">
-                <PencilIcon className=" w-8 fill-black/30" />
-                Edit
-                <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-[focus]:inline">
-                  ⌘E
-                </kbd>
-              </button>
-            </MenuItem>
-            <MenuItem>
-              <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-[focus]:bg-white/10">
-                <Square2StackIcon className=" w-8 fill-black/30" />
-                Duplicate
-                <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">
-                  ⌘D
-                </kbd>
-              </button>
-            </MenuItem>
-            <div className="my-1 h-px bg-white/5" />
-            <MenuItem>
-              <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-[focus]:bg-white/10">
-                <ArchiveBoxXMarkIcon className="w-8 fill-black/30" />
-                Archive
-                <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">
-                  ⌘A
-                </kbd>
-              </button>
-            </MenuItem>
-            <MenuItem>
-              <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-[focus]:bg-white/10">
-                <TrashIcon className="w-8 fill-black/30" />
-                Delete
-                <kbd className="ml-auto hidden font-sans text-xs text-black/50 group-data-[focus]:inline">
-                  ⌘D
-                </kbd>
-              </button>
-            </MenuItem>
-          </MenuItems>
-        </Transition>
-      </Menu>
-    </div>
+          <div className="p-3">
+            <a
+              className="block rounded-lg px-3 py-2 transition hover:bg-white/5"
+              href="#"
+            >
+              <p className="font-semibold text-white">Insights</p>
+              <p className="text-white/50">Measure actions your users take</p>
+            </a>
+            <a
+              className="block rounded-lg px-3 py-2 transition hover:bg-white/5"
+              href="#"
+            >
+              <p className="font-semibold text-white">Automations</p>
+              <p className="text-white/50">Create your own targeted content</p>
+            </a>
+            <a
+              className="block rounded-lg px-3 py-2 transition hover:bg-white/5"
+              href="#"
+            >
+              <p className="font-semibold text-white">Reports</p>
+              <p className="text-white/50">Keep track of your growth</p>
+            </a>
+          </div>
+          <div className="p-3">
+            <a
+              className="block rounded-lg px-3 py-2 transition hover:bg-white/5"
+              href="#"
+            >
+              <p className="font-semibold text-white">Documentation</p>
+              <p className="text-white/50">
+                Start integrating products and tools
+              </p>
+            </a>
+          </div>
+        </PopoverPanel>
+      </Transition>
+    </Popover>
+  );
+}
+
+function Notification() {
+  return (
+    <Popover className={`mt-[0.7rem]`}>
+      <PopoverButton className="text-sm/6 font-semibold text-white/50 focus:outline-none data-[active]:text-white data-[hover]:text-white data-[focus]:outline-1 data-[focus]:outline-white">
+        <BellIcon className=" w-7 text-white" />
+      </PopoverButton>
+      <Transition
+        enter="transition ease-out duration-200"
+        enterFrom="opacity-0 translate-y-1"
+        enterTo="opacity-100 translate-y-0"
+        leave="transition ease-in duration-150"
+        leaveFrom="opacity-100 translate-y-0"
+        leaveTo="opacity-0 translate-y-1"
+      >
+        <PopoverPanel
+          anchor="bottom end"
+          className="mt-[6px] divide-y divide-white/5 rounded-xl bg-black text-sm/6 [--anchor-gap:var(--spacing-5)]"
+        >
+          <div className="p-3">
+            <a
+              className="block rounded-lg px-3 py-2 transition hover:bg-white/5"
+              href="#"
+            >
+              <p className="font-semibold text-white">Insights</p>
+              <p className="text-white/50">Measure actions your users take</p>
+            </a>
+            <a
+              className="block rounded-lg px-3 py-2 transition hover:bg-white/5"
+              href="#"
+            >
+              <p className="font-semibold text-white">Automations</p>
+              <p className="text-white/50">Create your own targeted content</p>
+            </a>
+            <a
+              className="block rounded-lg px-3 py-2 transition hover:bg-white/5"
+              href="#"
+            >
+              <p className="font-semibold text-white">Reports</p>
+              <p className="text-white/50">Keep track of your growth</p>
+            </a>
+          </div>
+          <div className="p-3">
+            <a
+              className="block rounded-lg px-3 py-2 transition hover:bg-white/5"
+              href="#"
+            >
+              <p className="font-semibold text-white">Documentation</p>
+              <p className="text-white/50">
+                Start integrating products and tools
+              </p>
+            </a>
+          </div>
+        </PopoverPanel>
+      </Transition>
+    </Popover>
   );
 }
